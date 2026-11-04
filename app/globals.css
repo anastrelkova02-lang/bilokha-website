@@ -6,8 +6,9 @@
   --ivory: #f5f2eb;
   --paper: #eae6dc;
   --white: #faf9f6;
-  --ink: #171717;
-  --ink-2: #4a4744;
+  --ink: #242424;
+  --black: #171717;
+  --ink-2: #55524e;
   --ink-3: #8a857d;
   --line: rgba(23, 23, 23, 0.16);
   --burgundy: #800f18;
@@ -175,8 +176,8 @@ em { font-style: italic; }
   padding-top: 8px; border-top: 1px solid var(--line);
 }
 .hero__photo {
-  grid-column: 6 / 10; grid-row: 1 / 4; align-self: center; position: relative;
-  height: min(74svh, 760px); margin-top: 24px;
+  grid-column: 6 / 12; grid-row: 1 / 4; align-self: center; position: relative;
+  height: min(76svh, 780px); margin-top: 24px;
   animation: heroImg 1.8s var(--ease-out) 0.1s both;
 }
 .hero__photo .photo { height: 100%; }
@@ -186,7 +187,7 @@ em { font-style: italic; }
   font-size: 11px; letter-spacing: 0.22em; color: var(--burgundy); font-weight: 500;
 }
 .hero__sig {
-  position: absolute; left: 4vw; right: 6vw; top: 50%; transform: translateY(-38%); margin: 0; pointer-events: none;
+  position: absolute; left: 2.5vw; right: 27vw; bottom: 13%; margin: 0; pointer-events: none;
   z-index: 2;
 }
 .hero__sig svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 0 1px rgba(128, 15, 24, 0.15)); }
@@ -208,7 +209,7 @@ em { font-style: italic; }
 @keyframes scrollLine { to { top: 100%; } }
 
 /* ---------- Фрагменти ---------- */
-.frags { padding: clamp(80px, 14vw, 200px) var(--gutter) clamp(60px, 10vw, 140px); border-bottom: 1px solid var(--line); }
+.frags { background: var(--paper); padding: clamp(80px, 14vw, 200px) var(--gutter) clamp(60px, 10vw, 140px); border-bottom: 1px solid var(--line); }
 .frags__label { margin-bottom: 48px; }
 .frags__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 72px); }
 .frag blockquote {
@@ -264,7 +265,7 @@ em { font-style: italic; }
 .poem-excerpt { font-family: var(--serif); font-size: 21px; line-height: 1.5; margin: 0 0 28px; }
 
 /* ---------- Тизер архіву ---------- */
-.teaser { display: grid; grid-template-columns: 5fr 7fr; gap: var(--gutter); padding: clamp(100px, 14vw, 200px) var(--gutter); align-items: center; }
+.teaser { background: var(--white); display: grid; grid-template-columns: 5fr 7fr; gap: var(--gutter); padding: clamp(100px, 14vw, 200px) var(--gutter); align-items: center; }
 .teaser__text .display { margin: 18px 0 32px; }
 .collage { position: relative; height: clamp(420px, 52vw, 760px); }
 .collage .photo { height: 100%; }
@@ -402,28 +403,28 @@ em { font-style: italic; }
 .dcell:nth-child(3n + 2).is-in { transform: translateY(48px); }
 .dcell:nth-child(5n) { margin-left: 18%; }
 
-.strip { margin-top: clamp(80px, 10vw, 160px); background: var(--ink); padding: 26px 0; overflow: hidden; position: relative; }
+.strip { margin-top: clamp(80px, 10vw, 160px); background: var(--paper); padding: 26px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; position: relative; }
 .strip::before, .strip::after {
   content: ''; position: absolute; left: 0; right: 0; height: 8px;
-  background: repeating-linear-gradient(90deg, transparent 0 14px, var(--ivory) 14px 24px); opacity: 0.85;
+  background: repeating-linear-gradient(90deg, transparent 0 14px, rgba(36,36,36,.18) 14px 24px);
 }
 .strip::before { top: 8px; }
 .strip::after { bottom: 8px; }
 .strip__track { display: flex; gap: 10px; width: max-content; animation: strip 80s linear infinite; }
 .strip__frame { position: relative; width: 150px; height: 104px; flex: none; overflow: hidden; }
 .strip__frame img { object-fit: cover; filter: grayscale(1) contrast(1.15) brightness(0.9); }
-.strip__frame small { position: absolute; left: 4px; bottom: 2px; font-size: 9px; color: #e8b34b; letter-spacing: 0.1em; font-family: var(--sans); }
+.strip__frame small { position: absolute; left: 4px; bottom: 2px; font-size: 9px; color: var(--ivory); letter-spacing: 0.1em; font-family: var(--sans); }
 @keyframes strip { to { transform: translateX(-50%); } }
 
 .lightbox {
-  position: fixed; inset: 0; z-index: 95; background: rgba(23, 23, 23, 0.94);
+  position: fixed; inset: 0; z-index: 95; background: rgba(245, 242, 235, 0.97);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 40px var(--gutter);
   animation: pageIn 0.5s var(--ease-out);
 }
 .lightbox__img { position: relative; width: min(90vw, 1200px); height: 78vh; }
 .lightbox__img img { object-fit: contain; filter: grayscale(1) contrast(1.06); }
-.lightbox__cap { color: var(--ivory); font-family: var(--serif); font-style: italic; font-size: 18px; margin: 0; }
-.lightbox__close { position: absolute; top: 20px; right: var(--gutter); color: var(--ivory); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+.lightbox__cap { color: var(--ink); font-family: var(--serif); font-style: italic; font-size: 18px; margin: 0; }
+.lightbox__close { position: absolute; top: 20px; right: var(--gutter); color: var(--ink); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
 
 /* ==========================================================================
    КОНТАКТ
@@ -444,7 +445,7 @@ em { font-style: italic; }
 /* ==========================================================================
    ПІДВАЛ
    ========================================================================== */
-.ftr { padding: clamp(80px, 10vw, 140px) var(--gutter) 28px; border-top: 1px solid var(--line); background: var(--ivory); overflow: hidden; }
+.ftr { padding: clamp(80px, 10vw, 140px) var(--gutter) 28px; border-top: 1px solid var(--line); background: var(--paper); overflow: hidden; }
 .ftr__top { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
 .ftr__line { font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2vw, 30px); margin: 0; max-width: 24ch; line-height: 1.15; }
 .ftr__top nav { display: flex; flex-direction: column; gap: 8px; text-align: right; }
@@ -474,7 +475,8 @@ em { font-style: italic; }
   .hero { display: flex; flex-direction: column; padding-top: 80px; gap: 0; }
   .hero__photo { height: 62svh; width: 78%; margin: 28px 0 0 auto; }
   .hero__vertical { right: auto; left: -26px; }
-  .hero__sig { left: 3vw; right: 3vw; top: 46%; }
+  .hero__sig { left: 3vw; right: 3vw; bottom: auto; top: 52%; }
+  .hero__photo { width: 92%; height: 58svh; }
   .hero__phrase { margin-top: 32px; max-width: 18ch; align-self: flex-start; }
   .hero__scroll { position: absolute; right: var(--gutter); bottom: 32px; }
 

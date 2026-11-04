@@ -28,7 +28,7 @@ export default function Home() {
         </div>
 
         <div className="hero__photo">
-          <Photo photo={photos.window} priority sizes="(max-width: 768px) 80vw, 34vw" />
+          <Photo photo={photos.authorField} priority sizes="(max-width: 768px) 90vw, 50vw" />
           <span className="hero__vertical">ПОЕТИЧНИЙ АРХІВ · УКРАЇНА</span>
         </div>
 
@@ -106,10 +106,10 @@ export default function Home() {
           <Link href="/arkhiv" className="link-u">Відкрити архів →</Link>
         </Reveal>
         <div className="collage" aria-hidden>
-          <Reveal className="collage__a"><Photo photo={photos.rails} sizes="30vw" /></Reveal>
+          <Reveal className="collage__a"><Photo photo={photos.authorPath} sizes="30vw" /></Reveal>
           <Reveal className="collage__b" delay={150}><Photo photo={photos.glass} sizes="22vw" /></Reveal>
-          <Reveal className="collage__c" delay={300}><Photo photo={photos.bus} sizes="26vw" /></Reveal>
-          <span className="collage__note">туман, вагони, вікна</span>
+          <Reveal className="collage__c" delay={300}><Photo photo={photos.authorMotion} sizes="26vw" /></Reveal>
+          <span className="collage__note">стежка, поле, рух</span>
         </div>
       </section>
     </>

@@ -1,7 +1,7 @@
 /**
  * ФОТОГРАФІЇ
  *
- * Зараз це тимчасові чорно-білі кадри з Unsplash (безкоштовна ліцензія Unsplash).
+ * Фото автора лежать у /public/photos/. Решта — тимчасові ч/б кадри з Unsplash (безкоштовна ліцензія).
  * Щоб замінити на власні фото автора:
  *  1. Покладіть файл у /public/photos/ (наприклад /public/photos/portrait.jpg).
  *  2. Замініть `src` на '/photos/portrait.jpg'.
@@ -13,6 +13,12 @@ export type Photo = { src: string; alt: string; caption?: string };
 const u = (id: string) => `https://images.unsplash.com/${id}`;
 
 export const photos = {
+  // — фото автора —
+  authorField: { src: '/photos/field.jpg', alt: 'Автор у полі серед трави', caption: 'поле, травень' },
+  authorPortrait: { src: '/photos/portrait.jpg', alt: 'Портрет автора в профіль', caption: 'автор' },
+  authorPath: { src: '/photos/path.jpg', alt: 'Автор на лісовій дорозі', caption: 'стежка' },
+  authorMotion: { src: '/photos/motion.jpg', alt: 'Автор іде, розмитий рух', caption: 'рух' },
+  // — тимчасові кадри (Unsplash) —
   window: { src: u('photo-1534330207526-8e81f10ec6fc'), alt: 'Силует людини біля вікна', caption: 'вікно, вечір' },
   windowCross: { src: u('photo-1639377041729-9e3f3729023c'), alt: 'Відчинене вікно, чорно-білий кадр', caption: 'рама' },
   silhouetteRoom: { src: u('photo-1564282676894-f240ac8bee4d'), alt: 'Силует людини в кімнаті', caption: 'кімната' },
@@ -42,8 +48,9 @@ export const photo = (k?: string): Photo | undefined => (k ? (photos as Record<s
 
 /** Порядок кадрів у «Візуальному архіві» */
 export const diary: { key: PhotoKey; size: 's' | 'm' | 'l' | 'tall' | 'wide' }[] = [
-  { key: 'window', size: 'tall' },
+  { key: 'authorMotion', size: 'tall' },
   { key: 'fog', size: 'wide' },
+  { key: 'authorPath', size: 'm' },
   { key: 'glass', size: 's' },
   { key: 'rails', size: 'm' },
   { key: 'bus', size: 'l' },
@@ -53,6 +60,7 @@ export const diary: { key: PhotoKey; size: 's' | 'm' | 'l' | 'tall' | 'wide' }[]
   { key: 'wheat', size: 'm' },
   { key: 'curtain', size: 's' },
   { key: 'platform', size: 'l' },
+  { key: 'authorField', size: 'l' },
   { key: 'alley', size: 'tall' },
   { key: 'shadow', size: 'm' },
   { key: 'forestRoad', size: 'wide' },

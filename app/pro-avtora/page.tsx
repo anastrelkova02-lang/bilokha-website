@@ -30,8 +30,7 @@ export default function AboutPage() {
         <Signature className="about__sig" draw duration={2.6} delay={0.6} color="var(--burgundy)" />
       </div>
       <div className="about__img">
-        <Photo photo={photos.silhouetteRoom} priority sizes="(max-width: 900px) 100vw, 55vw" />
-        <span className="about__imgnote">портрет автора — замініть на власне фото</span>
+        <Photo photo={photos.authorPortrait} priority sizes="(max-width: 900px) 100vw, 55vw" />
       </div>
     </div>
   );
