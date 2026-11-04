@@ -1,0 +1,9 @@
+{
+  "name": "bilokha-brand-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node gen.mjs signature.strokes.json ../bilokha-signature && node gen.mjs monogram.strokes.json ../bilokha-monogram"
+  },
+  "dependencies": { "perfect-freehand": "1.2.2", "sharp": "^0.34.0" }
+}
