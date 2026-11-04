@@ -6,8 +6,8 @@
  * (як закладка в книжці / цезура у вірші). Це головна впізнавана деталь знака.
  *
  * Запуск:  cd brand/tools && npm install && npm run build
- * Результат: brand/*.svg, brand/*.png, public/brand/*, app/icon.svg, app/apple-icon.png,
- *            app/opengraph-image.png, lib/wordmark.ts
+ * Результат: brand/*.svg, brand/*.png, public/brand/*, lib/wordmark.ts
+ * Іконки та OG-зображення — окремий скрипт icons.mjs
  */
 import opentype from 'opentype.js';
 import sharp from 'sharp';
@@ -86,26 +86,13 @@ const files = {
   'bilokha-wordmark-mono.svg': svg(word, { accent: INK }),
   'bilokha-wordmark-light.svg': svg(word, { ink: PAPER, accent: PAPER }),
   'bilokha-monogram.svg': svg(mono, { pad: 30 }),
-  'bilokha-favicon.svg': svg(mono, { bg: PAPER, square: true }),
-  'bilokha-avatar.svg': svg(mono, { bg: PAPER, square: true }),
 };
 for (const [name, s] of Object.entries(files)) {
   out(path.join(ROOT, 'brand', name), s);
   out(path.join(ROOT, 'public/brand', name), s);
 }
-out(path.join(ROOT, 'app/icon.svg'), files['bilokha-favicon.svg']);
 
 await png(svg(word, { bg: PAPER, pad: 80 }), path.join(ROOT, 'brand/bilokha-wordmark.png'), 2400);
-await png(files['bilokha-avatar.svg'], path.join(ROOT, 'brand/bilokha-avatar-1080.png'), 1080);
-await png(files['bilokha-favicon.svg'], path.join(ROOT, 'app/apple-icon.png'), 180);
-
-// OG-зображення 1200×630
-const wm = await sharp(Buffer.from(svg(word).replace('<svg ', '<svg width="640" '))).png().toBuffer();
-const m = await sharp(wm).metadata();
-await sharp({ create: { width: 1200, height: 630, channels: 3, background: PAPER } })
-  .composite([{ input: wm, left: Math.round((1200 - m.width) / 2), top: Math.round((630 - m.height) / 2) }])
-  .png().toFile(path.join(ROOT, 'app/opengraph-image.png'));
-
 // Дані для React-компонента
 const toData = ({ parts, width }) => ({
   viewBox: `${-8} ${Math.round(-capH - BAR.up - 8)} ${Math.round(width + 16)} ${Math.round(capH + BAR.up + BAR.down + 16)}`,

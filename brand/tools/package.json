@@ -2,6 +2,6 @@
   "name": "bilokha-brand-tools",
   "private": true,
   "type": "module",
-  "scripts": { "build": "node wordmark.mjs" },
+  "scripts": { "build": "node wordmark.mjs && node icons.mjs" },
   "dependencies": { "opentype.js": "1.3.4", "sharp": "^0.34.0" }
 }

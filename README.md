@@ -73,13 +73,16 @@ npm run build      # перевірка продакшн-збірки
 | `bilokha-wordmark-mono.svg` | одноколірний |
 | `bilokha-wordmark-light.svg` | для темного тла / фото |
 | `bilokha-monogram.svg` | монограма «Б|» |
-| `bilokha-favicon.svg`, `bilokha-avatar.svg`, `bilokha-avatar-1080.png` | іконка сайту, аватар для соцмереж |
+| `bilokha-symbol.svg`, `bilokha-symbol-1080.png` | символ: власна «Б» з продовженим стемом — іконка, аватар для соцмереж |
+| `bilokha-og.png` | зображення для поширення посилань (1200×630) |
 | `bilokha-wordmark.png` | растрова версія 2400px |
+
+**Іконки сайту** (`public/`): `favicon.ico` (16/32/48), `favicon.svg`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`; маніфест — `app/manifest.ts`. Зображення для Telegram / WhatsApp / Facebook / X — `app/opengraph-image.png` і `app/twitter-image.png`. Усе генерує `brand/tools/icons.mjs`.
 
 Знак генерується скриптом `brand/tools/wordmark.mjs` (трекінг, товщина і висота вертикалі — на початку файла):
 
 ```bash
-npm run brand     # оновлює brand/, public/brand/, іконки та lib/wordmark.ts
+npm run brand     # оновлює brand/, public/brand/, іконки, OG-зображення та lib/wordmark.ts
 ```
 
 ## Типографіка

@@ -22,7 +22,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: p.title,
     description: desc,
     alternates: { canonical: `/poeziia/${p.slug}` },
-    openGraph: { type: 'article', title: `${p.title} — ${site.name}`, description: desc },
+    openGraph: {
+      type: 'article',
+      url: `/poeziia/${p.slug}`,
+      title: `${p.title} — ${site.name}`,
+      description: desc,
+      images: [{ url: '/opengraph-image.png?v=2', width: 1200, height: 630, alt: `${site.name} — поетичний архів` }],
+    },
   };
 }
 
