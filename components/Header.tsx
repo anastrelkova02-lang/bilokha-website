@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Signature from './Signature';
+import Wordmark from './Wordmark';
 import { site } from '@/content/site';
 
 /**
@@ -52,7 +52,7 @@ export default function Header() {
     <header className={cls}>
       <div className="hdr__bar">
         <Link href="/" className="hdr__logo" aria-label="БIЛОKhA — на головну">
-          <Signature color="var(--burgundy)" />
+          <Wordmark />
         </Link>
 
         <nav className="hdr__nav" aria-label="Головне меню">

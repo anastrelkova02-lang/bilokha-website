@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
+import Wordmark from '@/components/Wordmark';
 import { photos } from '@/content/photos';
 import { about } from '@/content/site';
 
@@ -20,7 +21,7 @@ export default function AboutPage() {
       <div className="about__text">
         <Reveal>
           <span className="mono">Про автора</span>
-          <h1 className="about__title">БIЛОKhA</h1>
+          <h1 className="about__title"><Wordmark /></h1>
           <p className="about__lead">{about.lead}</p>
           {about.paragraphs.map((t, i) => (
             <p key={i} className="about__p">{t}</p>

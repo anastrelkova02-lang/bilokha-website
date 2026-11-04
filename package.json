@@ -9,10 +9,10 @@
     "brand": "cd brand/tools && npm install && npm run build"
   },
   "dependencies": {
-    "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/ibm-plex-mono": "^5.3.0",
-    "@fontsource/inter": "^5.3.0",
-    "@fontsource/manrope": "^5.3.0",
+    "@fontsource/noto-serif": "^5.3.0",
+    "@fontsource/noto-serif-display": "^5.3.0",
+    "@fontsource/onest": "^5.3.1",
     "next": "^15.5.29",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"

@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import '@fontsource/manrope/400.css';
-import '@fontsource/manrope/500.css';
-import '@fontsource/manrope/600.css';
-import '@fontsource/cormorant-garamond/400.css';
-import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/noto-serif-display/400.css';
+import '@fontsource/noto-serif-display/500.css';
+import '@fontsource/noto-serif/400.css';
+import '@fontsource/onest/400.css';
+import '@fontsource/onest/500.css';
+import '@fontsource/onest/600.css';
 import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';

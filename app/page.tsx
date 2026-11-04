@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Signature from '@/components/Signature';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import PoemIndex from '@/components/PoemIndex';
@@ -8,48 +7,60 @@ import { photos } from '@/content/photos';
 import { poems, getPoem, poemNumber } from '@/content/poems';
 import { site, about } from '@/content/site';
 
-// Уривок для обкладинки — рядок з вірша «ПІСЛЯСМАК»
-const EXCERPT = { slug: 'pisliasmak', text: 'Це літо було невиразно красивим.' };
+// Уривок на обкладинці — точний рядок із вірша «ПІСЛЯСМАК» (без змін)
+const EXCERPT = { slug: 'pisliasmak', line: 'це літо було невиразно красивим.' };
 
 export default function Home() {
   const src = getPoem(EXCERPT.slug)!;
+  if (!src.text.includes(EXCERPT.line)) throw new Error('Уривок має точно збігатися з текстом вірша');
   const total = String(poems.length).padStart(2, '0');
 
   return (
     <>
       {/* 01 — ОБКЛАДИНКА */}
-      <section className="cover" aria-label="БIЛОKhA — обкладинка">
-        <div className="cover__top">
-          <span>БIЛОKhA / 001</span>
-          <span className="cover__top-mid">Поетичний архів</span>
+      <section className="cover" aria-label="Обкладинка">
+        <div className="cover__mast">
+          <span>№ 001</span>
+          <span className="cover__mast-mid">Сучасна українська поезія</span>
           <span>Україна / 2026</span>
         </div>
 
-        <div className="cover__main">
-          <Photo photo={photos.field} priority sizes="(max-width: 960px) 100vw, 64vw" className="photo--slow" />
-        </div>
+        <figure className="cover__main">
+          <Photo photo={photos.field} priority sizes="(max-width: 960px) 100vw, 66vw" className="photo--slow" />
+          <blockquote className="cover__quote">
+            <p>«{EXCERPT.line}»</p>
+            <footer>
+              <span>{poemNumber(src.slug)}</span> {src.title}
+            </footer>
+          </blockquote>
+          <figcaption className="cover__cap">Фото 01 — Поле</figcaption>
+        </figure>
 
-        <div className="cover__side">
-          <div className="cover__small">
-            <Photo photo={photos.motion} sizes="(max-width: 960px) 40vw, 18vw" />
-            <span className="cover__frame">06A</span>
-          </div>
-          <div className="cover__excerpt">
-            <span className="mono">{poemNumber(src.slug)} — {src.title}</span>
-            <blockquote>«{EXCERPT.text.replace(/\.$/, '')}».</blockquote>
+        <aside className="cover__side">
+          <div className="cover__toc">
+            <span className="mono">У цьому архіві</span>
+            <ol>
+              {poems.map((p, i) => (
+                <li key={p.slug}>
+                  <Link href={`/poeziia/${p.slug}`}>
+                    <span className="mono">{String(i + 1).padStart(2, '0')}</span>
+                    {p.title}
+                  </Link>
+                </li>
+              ))}
+            </ol>
             <Link href="/poeziia" className="cta">
               Читати поезію <span aria-hidden>↗</span>
             </Link>
           </div>
-        </div>
+          <div className="cover__small">
+            <Photo photo={photos.motion} sizes="(max-width: 960px) 40vw, 14vw" />
+            <span className="cover__small-cap mono">Фото 02 — Рух</span>
+          </div>
+        </aside>
 
-        <h1 className="cover__sig">
-          <Signature draw duration={3.2} delay={0.6} color="var(--burgundy)" />
-        </h1>
-
-        <div className="cover__bottom">
-          <span>01 — Поетичний архів</span>
-          <span>{total} віршів · фото · тексти</span>
+        <div className="cover__foot">
+          <span>{total} віршів · фотографії · тексти</span>
           <a href="#poetry" className="cover__scroll">Гортати ↓</a>
         </div>
       </section>
