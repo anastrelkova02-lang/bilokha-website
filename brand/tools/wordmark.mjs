@@ -2,8 +2,8 @@
  * БIЛОKhA — генератор словесного знака (wordmark).
  *
  * Літери Б Л О K h A — з Noto Serif Display Medium (контури, не шрифт: SVG не залежить від шрифтів).
- * «I» замінено на власний елемент — тонку бордову вертикаль, що виходить за межі рядка
- * (як закладка в книжці / цезура у вірші). Це головна впізнавана деталь знака.
+ * «I» замінено на власний елемент — тонку бордову вертикаль, на ~13% нижчу за великі літери
+ * й оптично відцентровану по висоті рядка (як цезура у вірші). Це головна впізнавана деталь знака.
  *
  * Запуск:  cd brand/tools && npm install && npm run build
  * Результат: brand/*.svg, brand/*.png, public/brand/*, lib/wordmark.ts
@@ -38,7 +38,10 @@ const SEQ = [
 
 const capH = (() => { const b = cyr.charToGlyph('Б').getBoundingBox(); return b.y2; })();
 const stem = 76; // товщина власної «I»
-const BAR = { up: 120, down: 150, padL: 64, padR: 70 };
+// Вертикаль-«I»: 87% висоти великих літер, центр — на середині висоти великих літер.
+const BAR = { scale: 0.87, padL: 56, padR: 62 };
+const barH = capH * BAR.scale;
+const barY = -capH + (capH - barH) / 2;
 
 function build({ withBar = true, letters = SEQ } = {}) {
   let x = 0;
@@ -46,20 +49,21 @@ function build({ withBar = true, letters = SEQ } = {}) {
   for (const [ch, font, after] of letters) {
     if (ch === '|') {
       x += BAR.padL;
-      if (withBar) parts.push({ type: 'bar', x, y: -capH - BAR.up, w: stem, h: capH + BAR.up + BAR.down });
+      if (withBar) parts.push({ type: 'bar', x, y: barY, w: stem, h: barH });
       x += stem + BAR.padR;
       continue;
     }
     const g = font.charToGlyph(ch);
     const p = g.getPath(x, 0, SIZE);
-    parts.push({ type: 'glyph', d: p.toPathData(1) });
+    const bb = p.getBoundingBox();
+    parts.push({ type: 'glyph', d: p.toPathData(1), y1: bb.y1, y2: bb.y2 });
     x += g.advanceWidth * (SIZE / font.unitsPerEm) + after;
   }
-  return { parts, width: x };
+  const gl = parts.filter((q) => q.type === 'glyph');
+  return { parts, width: x, minY: Math.min(...gl.map((q) => q.y1)), maxY: Math.max(0, ...gl.map((q) => q.y2)) };
 }
 
-function svg({ parts, width }, { ink = INK, accent = ACCENT, bg = null, pad = 40, square = false } = {}) {
-  let minY = -capH - BAR.up, maxY = BAR.down;
+function svg({ parts, width, minY, maxY }, { ink = INK, accent = ACCENT, bg = null, pad = 40, square = false } = {}) {
   let vx = -pad, vy = minY - pad, vw = width + pad * 2, vh = maxY - minY + pad * 2;
   if (square) {
     const s = Math.max(vw, vh) * 1.12;
@@ -94,8 +98,8 @@ for (const [name, s] of Object.entries(files)) {
 
 await png(svg(word, { bg: PAPER, pad: 80 }), path.join(ROOT, 'brand/bilokha-wordmark.png'), 2400);
 // Дані для React-компонента
-const toData = ({ parts, width }) => ({
-  viewBox: `${-8} ${Math.round(-capH - BAR.up - 8)} ${Math.round(width + 16)} ${Math.round(capH + BAR.up + BAR.down + 16)}`,
+const toData = ({ parts, width, minY, maxY }) => ({
+  viewBox: `${-8} ${Math.round(minY - 8)} ${Math.round(width + 16)} ${Math.round(maxY - minY + 16)}`,
   glyphs: parts.filter((p) => p.type === 'glyph').map((p) => p.d),
   bar: parts.filter((p) => p.type === 'bar').map((p) => ({ x: Math.round(p.x), y: Math.round(p.y), w: p.w, h: Math.round(p.h) }))[0],
 });
