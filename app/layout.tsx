@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import '@fontsource/cormorant-garamond/300.css';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/500.css';
+import '@fontsource/manrope/600.css';
 import '@fontsource/cormorant-garamond/400.css';
 import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/300-italic.css';
-import '@fontsource/cormorant-garamond/400-italic.css';
-import '@fontsource/inter/300.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
-export const viewport: Viewport = { themeColor: '#F5F2EB', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#F7F6F2', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

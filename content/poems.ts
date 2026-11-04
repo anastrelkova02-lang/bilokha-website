@@ -29,7 +29,7 @@ export const poems: Poem[] = [
     slug: 'ana',
     title: 'АНА',
     layout: 'margin',
-    photo: 'leaves',
+    photo: 'fieldTrees',
     note: 'Осінь, знаєш, певно, також має свій запах.',
     text: `Де твоя земля? Де твоя осіння земля?
 Де твої птахи, які знов полетіли на південь?
@@ -57,7 +57,7 @@ export const poems: Poem[] = [
     slug: 'toboyu-chy-nie',
     title: 'ТОБОЮ ЧИ НЄ?',
     layout: 'split',
-    photo: 'glass',
+    photo: 'portraitLight',
     text: `А у мене до тебе — хімія,
 з твоїх вуст — лишень математика.
 Ця умовна, уявна лінія
@@ -75,7 +75,7 @@ export const poems: Poem[] = [
     slug: 'zapalnychka',
     title: 'ЗАПАЛЬНИЧКА',
     layout: 'vertical',
-    photo: 'smoke',
+    photo: 'motionLeaves',
     text: `Боже, дай знати, куди мені йти,
 дай наснаги покинути звичку.
 А раптом захочеш змінити світи —
@@ -96,7 +96,7 @@ export const poems: Poem[] = [
     slug: 'pisliasmak',
     title: 'ПІСЛЯСМАК',
     layout: 'cover',
-    photo: 'grass',
+    photo: 'field',
     text: `Учора пролились серпневі зливи,
 веселкою стали краплі останні.
 У цьому всесвіті — божевільнім
@@ -118,7 +118,7 @@ export const poems: Poem[] = [
     slug: 'dofamin',
     title: 'ДОФАМІН',
     layout: 'split',
-    photo: 'terminal',
+    photo: 'motion',
     text: `Голос із присмаком гелію,
 шепіт смаку шоколаду.
 Винні твої артерії,
@@ -144,7 +144,7 @@ export const poems: Poem[] = [
     slug: 'vidlik',
     title: 'VIDLIK',
     layout: 'margin',
-    photo: 'street',
+    photo: 'pathTrees',
     note: 'Кожна мить починається з відліку.',
     text: `Кожна мить починається з відліку.
 Літній вечір пахне лавандою.
@@ -167,7 +167,7 @@ export const poems: Poem[] = [
     slug: 'skhid',
     title: 'СХІД',
     layout: 'cover',
-    photo: 'road',
+    photo: 'path',
     text: `Стискає в обіймах любов до регіонів,
 масштабів навчальних полігонів,
 вайбу забутої дороги-бетонки...

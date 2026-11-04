@@ -12,12 +12,11 @@ export const metadata: Metadata = {
 export default function DiaryPage() {
   const items = diary.map((d, i) => ({ ...photos[d.key], size: d.size, no: String(i + 1).padStart(2, '0') }));
   return (
-    <div className="diary">
-      <Reveal className="diary__head">
-        <span className="label">Візуальний архів · {items.length} кадрів</span>
-        <h1 className="display display--xl">
-          Візуальний <em>архів</em>
-        </h1>
+    <div className="page diary">
+      <Reveal className="page__head">
+        <span className="mono">Візуальний архів / {items.length} кадрів</span>
+        <h1 className="page__title">Візуальний архів</h1>
+        <p className="page__sub">Документальний щоденник: поле, ліс, світло, рух.</p>
       </Reveal>
       <Diary items={items} />
     </div>

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Photo from '@/components/Photo';
-import Signature from '@/components/Signature';
 import { poems, getPoem } from '@/content/poems';
 import { photo } from '@/content/photos';
 import { site } from '@/content/site';
@@ -82,13 +81,13 @@ export default async function PoemPage({ params }: { params: Promise<Params> }) 
 
       {p.layout === 'cover' && (
         <>
-          <header className="pp-cover">
+          <div className="pp-cover">
             <Photo photo={ph} priority sizes="100vw" />
             <div className="pp-cover__title">
-              <span className="pp__no">{no}</span>
+              <span className="pp__no">№ {no}</span>
               <h1>{p.title}</h1>
             </div>
-          </header>
+          </div>
           <div className="pp__body pp__body--center">
             {meta}
             <PoemText text={p.text} />
@@ -103,7 +102,7 @@ export default async function PoemPage({ params }: { params: Promise<Params> }) 
           </div>
           <div className="pp-split__text">
             {meta}
-            <span className="pp__no">{no}</span>
+            <span className="pp__no">№ {no}</span>
             <h1 className="pp__title">{p.title}</h1>
             <PoemText text={p.text} />
           </div>
@@ -115,7 +114,7 @@ export default async function PoemPage({ params }: { params: Promise<Params> }) 
           <h1 className="pp-vert__title">{p.title}</h1>
           <div className="pp-vert__text">
             {meta}
-            <span className="pp__no">{no}</span>
+            <span className="pp__no">№ {no}</span>
             <PoemText text={p.text} />
           </div>
           {ph && (
@@ -144,14 +143,16 @@ export default async function PoemPage({ params }: { params: Promise<Params> }) 
       {p.layout === 'classic' && (
         <div className="pp__body pp__body--center">
           {meta}
-          <span className="pp__no">{no}</span>
+          <span className="pp__no">№ {no}</span>
           <h1 className="pp__title">{p.title}</h1>
           <PoemText text={p.text} />
         </div>
       )}
 
-      <div className="pp__end">
-        <Signature className="pp__end-sig" color="var(--burgundy)" />
+      <div className="pp__end" aria-hidden>
+        <span className="mono">{no} / {total}</span>
+        <span className="pp__end-rule" />
+        <span className="mono">БIЛОKhA</span>
       </div>
 
       <nav className="pp-nav" aria-label="Інші вірші">

@@ -4,7 +4,7 @@ import sharp from 'sharp';
 
 const strokesFile = process.argv[2] || 'strokes.json';
 const out = process.argv[3] || 'sig';
-const { strokes, slant = 0.26, size = 15, color = '#800F18' } = JSON.parse(fs.readFileSync(strokesFile, 'utf8'));
+const { strokes, slant = 0.26, size = 15, color = '#861B24' } = JSON.parse(fs.readFileSync(strokesFile, 'utf8'));
 
 // centripetal catmull-rom
 function crSample(pts, steps = 18) {
@@ -60,5 +60,5 @@ const vb = `${(minX - pad).toFixed(0)} ${(minY - pad).toFixed(0)} ${(maxX - minX
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" role="img" aria-label="БIЛОKhA"><title>БIЛОKhA</title><g fill="${color}">${paths.map((p) => `<path d="${p}"/>`).join('')}</g></svg>`;
 fs.writeFileSync(`${out}.svg`, svg);
 fs.writeFileSync(`${out}.json`, JSON.stringify({ viewBox: vb, paths, centers }));
-await sharp(Buffer.from(svg.replace('<svg ', '<svg width="1400" style="background:#F5F2EB" '))).flatten({ background: '#F5F2EB' }).png().toFile(`${out}.png`);
+await sharp(Buffer.from(svg.replace('<svg ', '<svg width="1400" style="background:#F7F6F2" '))).flatten({ background: '#F7F6F2' }).png().toFile(`${out}.png`);
 console.log('ok', vb);

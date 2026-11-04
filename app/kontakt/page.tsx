@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import Signature from '@/components/Signature';
 import Reveal from '@/components/Reveal';
+import Photo from '@/components/Photo';
+import { photos } from '@/content/photos';
 import { site } from '@/content/site';
 
 export const metadata: Metadata = {
@@ -11,25 +12,18 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="contact">
+    <div className="page contact">
       <Reveal className="contact__inner">
-        <span className="label">Контакт</span>
-        <p className="contact__invite">
-          Листи, запрошення на читання
-          <br />і розмови про поезію —
-        </p>
-        <ul className="contact__links">
-          <li>
-            <small>Пошта</small>
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-          </li>
-          <li>
-            <small>Instagram</small>
-            <a href={site.instagram.url} target="_blank" rel="noreferrer">{site.instagram.handle}</a>
-          </li>
+        <span className="mono">Контакт</span>
+        <h1 className="page__title">Листи, запрошення на читання і розмови про поезію.</h1>
+        <ul className="closing__links">
+          <li><span className="mono">Пошта</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><span className="mono">Instagram</span><a href={site.instagram.url} target="_blank" rel="noreferrer">{site.instagram.handle}</a></li>
         </ul>
       </Reveal>
-      <Signature className="contact__sig" draw duration={3} delay={0.3} color="var(--burgundy)" />
+      <Reveal className="contact__img" delay={150}>
+        <Photo photo={photos.fieldTrees} sizes="(max-width: 960px) 100vw, 40vw" caption="Узлісся" />
+      </Reveal>
     </div>
   );
 }

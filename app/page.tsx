@@ -3,113 +3,98 @@ import Signature from '@/components/Signature';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import PoemIndex from '@/components/PoemIndex';
+import SectionHead from '@/components/SectionHead';
 import { photos } from '@/content/photos';
-import { poems, getPoem } from '@/content/poems';
-import { site } from '@/content/site';
+import { poems, getPoem, poemNumber } from '@/content/poems';
+import { site, about } from '@/content/site';
 
-// Фрагменти — точні рядки з віршів автора
-const fragments = [
-  { slug: 'ana', line: 'Осінь точно знає всі несказані тобою слова.' },
-  { slug: 'toboyu-chy-nie', line: 'тобою колись я був створений,\nтобою і буду вбитий.' },
-  { slug: 'pisliasmak', line: 'це літо було невиразно красивим.' },
-];
+// Уривок для обкладинки — рядок з вірша «ПІСЛЯСМАК»
+const EXCERPT = { slug: 'pisliasmak', text: 'Це літо було невиразно красивим.' };
 
 export default function Home() {
-  const skhid = getPoem('skhid')!;
-  const skhidLines = skhid.text.split('\n').slice(0, 4);
+  const src = getPoem(EXCERPT.slug)!;
+  const total = String(poems.length).padStart(2, '0');
 
   return (
     <>
       {/* 01 — ОБКЛАДИНКА */}
-      <section className="hero" aria-label="БIЛОKhA">
-        <div className="hero__meta">
-          <span>Поетичний архів</span>
-          <span>Вірші № 01 — {String(poems.length).padStart(2, '0')}</span>
+      <section className="cover" aria-label="БIЛОKhA — обкладинка">
+        <div className="cover__top">
+          <span>БIЛОKhA / 001</span>
+          <span className="cover__top-mid">Поетичний архів</span>
+          <span>Україна / 2026</span>
         </div>
 
-        <div className="hero__photo">
-          <Photo photo={photos.authorField} priority sizes="(max-width: 768px) 90vw, 50vw" />
-          <span className="hero__vertical">ПОЕТИЧНИЙ АРХІВ · УКРАЇНА</span>
+        <div className="cover__main">
+          <Photo photo={photos.field} priority sizes="(max-width: 960px) 100vw, 64vw" className="photo--slow" />
         </div>
 
-        <h1 className="hero__sig">
-          <Signature draw duration={3.4} delay={0.5} color="var(--burgundy)" />
+        <div className="cover__side">
+          <div className="cover__small">
+            <Photo photo={photos.motion} sizes="(max-width: 960px) 40vw, 18vw" />
+            <span className="cover__frame">06A</span>
+          </div>
+          <div className="cover__excerpt">
+            <span className="mono">{poemNumber(src.slug)} — {src.title}</span>
+            <blockquote>«{EXCERPT.text.replace(/\.$/, '')}».</blockquote>
+            <Link href="/poeziia" className="cta">
+              Читати поезію <span aria-hidden>↗</span>
+            </Link>
+          </div>
+        </div>
+
+        <h1 className="cover__sig">
+          <Signature draw duration={3.2} delay={0.6} color="var(--burgundy)" />
         </h1>
 
-        <p className="hero__phrase">
-          <em>«{site.tagline.replace(/\.$/, '')}».</em>
-        </p>
-
-        <a href="#fragments" className="hero__scroll" aria-label="Гортати донизу">
-          <span>Гортайте</span>
-          <i aria-hidden />
-        </a>
-      </section>
-
-      {/* 02 — ФРАГМЕНТИ */}
-      <section id="fragments" className="frags">
-        <Reveal className="frags__label">
-          <span className="label">Фрагменти</span>
-        </Reveal>
-        <div className="frags__grid">
-          {fragments.map((f, i) => {
-            const p = getPoem(f.slug)!;
-            return (
-              <Reveal key={f.slug} delay={i * 140} className="frag">
-                <blockquote>{f.line}</blockquote>
-                <Link href={`/poeziia/${p.slug}`} className="frag__src">
-                  — {p.title}
-                </Link>
-              </Reveal>
-            );
-          })}
+        <div className="cover__bottom">
+          <span>01 — Поетичний архів</span>
+          <span>{total} віршів · фото · тексти</span>
+          <a href="#poetry" className="cover__scroll">Гортати ↓</a>
         </div>
       </section>
 
-      {/* 03 — ЗМІСТ */}
-      <section className="home-index">
-        <Reveal className="home-index__head">
-          <h2 className="display">Поезія</h2>
-          <p className="home-index__count">
-            <span>{String(poems.length).padStart(2, '0')}</span> віршів
-            <br />
-            <Link href="/poeziia" className="link-u">увесь архів →</Link>
-          </p>
-        </Reveal>
+      {/* 02 — ВИБРАНА ПОЕЗІЯ */}
+      <section id="poetry" className="sec">
+        <SectionHead no="02" title="Вибрана поезія" href="/poeziia" linkLabel="Увесь архів" />
         <PoemIndex />
       </section>
 
-      {/* 04 — РОЗВОРОТ: СХІД */}
-      <section className="spread">
-        <div className="spread__img">
-          <Photo photo={photos.road} sizes="100vw" />
+      {/* 03 — ВІЗУАЛЬНИЙ АРХІВ */}
+      <section className="sec sec--stone">
+        <SectionHead no="03" title="Візуальний архів" href="/arkhiv" linkLabel="Відкрити архів" />
+        <div className="vgrid">
+          <Reveal className="vgrid__a"><Photo photo={photos.path} sizes="(max-width: 960px) 100vw, 40vw" caption="01 — Стежка" /></Reveal>
+          <Reveal className="vgrid__b" delay={120}><Photo photo={photos.fieldGrass} sizes="(max-width: 960px) 100vw, 50vw" caption="02 — Трава" /></Reveal>
+          <Reveal className="vgrid__c" delay={240}><Photo photo={photos.portraitLight} sizes="(max-width: 960px) 50vw, 22vw" caption="03 — Світло" /></Reveal>
+          <Reveal className="vgrid__d" delay={360}><Photo photo={photos.motionLeaves} sizes="(max-width: 960px) 50vw, 22vw" caption="04 — Вітер" /></Reveal>
         </div>
-        <Reveal className="spread__card">
-          <span className="label">Вірш {String(poems.indexOf(skhid) + 1).padStart(2, '0')}</span>
-          <h2 className="spread__title">{skhid.title}</h2>
-          <p className="poem-excerpt">
-            {skhidLines.map((l, i) => (
-              <span key={i}>{l}<br /></span>
-            ))}
-          </p>
-          <Link href={`/poeziia/${skhid.slug}`} className="link-u">Читати повністю →</Link>
-        </Reveal>
       </section>
 
-      {/* 05 — ВІЗУАЛЬНИЙ АРХІВ */}
-      <section className="teaser">
-        <Reveal className="teaser__text">
-          <span className="label">Візуальний архів</span>
-          <h2 className="display display--sm">
-            Фрагменти чийогось <em>життя</em>
-          </h2>
-          <Link href="/arkhiv" className="link-u">Відкрити архів →</Link>
-        </Reveal>
-        <div className="collage" aria-hidden>
-          <Reveal className="collage__a"><Photo photo={photos.authorPath} sizes="30vw" /></Reveal>
-          <Reveal className="collage__b" delay={150}><Photo photo={photos.glass} sizes="22vw" /></Reveal>
-          <Reveal className="collage__c" delay={300}><Photo photo={photos.authorMotion} sizes="26vw" /></Reveal>
-          <span className="collage__note">стежка, поле, рух</span>
+      {/* 04 — ПРО АВТОРА */}
+      <section className="sec">
+        <SectionHead no="04" title="Про автора" href="/pro-avtora" linkLabel="Детальніше" />
+        <div className="intro">
+          <Reveal className="intro__img">
+            <Photo photo={photos.portrait} sizes="(max-width: 960px) 100vw, 42vw" />
+          </Reveal>
+          <Reveal className="intro__text" delay={150}>
+            <p className="intro__lead">{about.lead}</p>
+            <p className="intro__p">{about.paragraphs[0]}</p>
+            <Link href="/pro-avtora" className="cta">Про автора <span aria-hidden>↗</span></Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 05 — КОНТАКТ */}
+      <section className="sec sec--white">
+        <SectionHead no="05" title="Контакт" />
+        <div className="closing">
+          <p className="closing__line">Листи, запрошення на читання і розмови про поезію.</p>
+          <ul className="closing__links">
+            <li><span className="mono">Пошта</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
+            <li><span className="mono">Instagram</span><a href={site.instagram.url} target="_blank" rel="noreferrer">{site.instagram.handle}</a></li>
+          </ul>
         </div>
       </section>
     </>

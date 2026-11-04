@@ -30,7 +30,7 @@ export default function Diary({ items }: { items: Item[] }) {
               </span>
             </button>
             <p className="dcell__cap">
-              <span>№ {it.no}</span> {it.caption}
+              <span>{it.no}</span> {it.caption}
             </p>
           </Reveal>
         ))}
@@ -52,7 +52,7 @@ export default function Diary({ items }: { items: Item[] }) {
           <div className="lightbox__img" onClick={(e) => e.stopPropagation()}>
             <Image src={items[open].src} alt={items[open].alt} fill sizes="90vw" />
           </div>
-          <p className="lightbox__cap">№ {items[open].no} — {items[open].caption}</p>
+          <p className="lightbox__cap">{items[open].no} — {items[open].caption}</p>
           <button className="lightbox__close" onClick={() => setOpen(null)}>Закрити</button>
         </div>
       )}

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Photo from '@/components/Photo';
-import Signature from '@/components/Signature';
 import Reveal from '@/components/Reveal';
 import { photos } from '@/content/photos';
 import { about } from '@/content/site';
@@ -14,23 +13,33 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="about">
+      <div className="about__portrait">
+        <Photo photo={photos.portrait} priority sizes="(max-width: 960px) 100vw, 50vw" className="photo--slow" />
+      </div>
+
       <div className="about__text">
         <Reveal>
-          <p className="about__label">ПРО АВТОРА:</p>
+          <span className="mono">Про автора</span>
+          <h1 className="about__title">БIЛОKhA</h1>
           <p className="about__lead">{about.lead}</p>
           {about.paragraphs.map((t, i) => (
             <p key={i} className="about__p">{t}</p>
           ))}
           {about.placeholder && (
             <p className="about__hint">
-              Текст-заглушка. Біографію редагують у файлі <code>content/site.ts</code>.
+              <span className="mono">Примітка</span> Текст-заглушка. Біографію редагують у файлі content/site.ts.
             </p>
           )}
         </Reveal>
-        <Signature className="about__sig" draw duration={2.6} delay={0.6} color="var(--burgundy)" />
-      </div>
-      <div className="about__img">
-        <Photo photo={photos.authorPortrait} priority sizes="(max-width: 900px) 100vw, 55vw" />
+
+        <div className="about__frames">
+          <Reveal className="about__frame about__frame--a">
+            <Photo photo={photos.motion} sizes="(max-width: 960px) 45vw, 18vw" caption="01 — Рух" />
+          </Reveal>
+          <Reveal className="about__frame about__frame--b" delay={150}>
+            <Photo photo={photos.pathGround} sizes="(max-width: 960px) 55vw, 24vw" caption="02 — Колія" />
+          </Reveal>
+        </div>
       </div>
     </div>
   );
