@@ -1,8 +1,8 @@
 /**
  * БIЛОKhA — іконки сайту та зображення для соцмереж.
  *
- * Символ: власна «Б» — стем продовжено за межі літери (мотив вертикалі з логотипа).
- * Бордо #861B24 на теплому білому #F7F6F2. Для 16/32 px — менші поля, коротше продовження.
+ * Символ: монограма «БІ» з актуального логотипа — графітова «Б» і коротка бордова «І»
+ * на теплому білому #F7F6F2. Для 16/32 px — менші поля й потовщені тонкі штрихи.
  *
  * Запуск: cd brand/tools && npm run build
  * Результат: public/favicon.ico, favicon.svg, favicon-16x16.png, favicon-32x32.png,
@@ -25,42 +25,32 @@ const GREY = '#92918B';
 const BURG = '#861B24';
 
 /* ---------- 1. Символ ----------
- * Власна «Б»: літера з Noto Serif Display SemiBold, у якої основний штрих (стем)
- * продовжено вгору й униз за межі літери — той самий мотив «вертикалі», що й у логотипі.
- * Координати стема виміряно для Noto Serif Display 600 (x 134–271 одиниць при 1000/em).
+ * Монограма з актуального логотипа: «Б» (графіт) + коротка бордова «І» —
+ * ті самі контури й пропорції, що в словесному знаку (lib/wordmark.ts).
  */
-function symbol({ over = 0.2 } = {}) {
-  const f = load('noto-serif-display', 'cyrillic', 600);
-  const p = f.charToGlyph('Б').getPath(0, 0, 1000);
-  const bb = p.getBoundingBox();
-  const capH = -bb.y1;
-  const stem = { x: 134, w: 137 };
-  const ext = capH * over;
-  const y0 = bb.y1 - ext, h = capH + ext * 2;
-  return {
-    d: p.toPathData(1), x0: bb.x1, y0, w: bb.x2 - bb.x1, h,
-    stem: { x: stem.x, y: y0, w: stem.w, h },
-  };
-}
+const WM = fs.readFileSync(path.join(ROOT, 'lib/wordmark.ts'), 'utf8');
+const mono = JSON.parse(WM.match(/export const monogram = (\{.*?\}) as const;/s)[1]);
 
-function iconSVG(sym, { size = 512, pad = 0.2, bg = PAPER, boost = 0 } = {}) {
-  const inner = 1 - pad * 2;
-  const scale = (size * inner) / Math.max(sym.w, sym.h);
-  const tx = (size - sym.w * scale) / 2 - sym.x0 * scale;
-  const ty = (size - sym.h * scale) / 2 - sym.y0 * scale;
-  const st = sym.stem;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><rect width="${size}" height="${size}" fill="${bg}"/><g transform="translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${scale.toFixed(5)})" fill="${BURG}"><path d="${sym.d}"${boost ? ` stroke="${BURG}" stroke-width="${boost}" stroke-linejoin="round"` : ''}/><rect x="${st.x}" y="${st.y.toFixed(1)}" width="${st.w}" height="${st.h.toFixed(1)}"/></g></svg>`;
+function iconSVG({ size = 512, pad = 0.16, bg = PAPER, boost = 0 } = {}) {
+  // межі символу: від верху «Б» до базової лінії, по ширині — від «Б» до «І»
+  const f = load('noto-serif-display', 'cyrillic', 500);
+  const bb = f.charToGlyph('Б').getPath(0, 0, 1000).getBoundingBox();
+  const x0 = bb.x1, y0 = bb.y1, w = mono.bar.x + mono.bar.w - bb.x1, h = -bb.y1;
+  const scale = (size * (1 - pad * 2)) / Math.max(w, h);
+  const tx = (size - w * scale) / 2 - x0 * scale;
+  const ty = (size - h * scale) / 2 - y0 * scale;
+  const stroke = boost ? ` stroke="${INK}" stroke-width="${boost}" stroke-linejoin="round"` : '';
+  const b = mono.bar;
+  const bw = boost ? b.w + boost * 0.6 : b.w;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><rect width="${size}" height="${size}" fill="${bg}"/><g transform="translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${scale.toFixed(5)})">${mono.glyphs.map((d) => `<path d="${d}" fill="${INK}"${stroke}/>`).join('')}<rect x="${b.x}" y="${b.y}" width="${bw}" height="${b.h}" fill="${BURG}"/></g></svg>`;
 }
-
-const symMain = symbol({ over: 0.2 });
-const symSmall = symbol({ over: 0.14 }); // для 16–32 px: коротше продовження, більший кегль
 
 const write = (rel, data) => { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, data); };
 const png = (svg, size) => sharp(Buffer.from(svg)).resize(size, size).png().toBuffer();
 
-const svgMain = iconSVG(symMain, { size: 512, pad: 0.17 });
-const svgSmall = iconSVG(symSmall, { size: 512, pad: 0.07, boost: 44 }); // тонкі штрихи потовщено для 16–32 px
-const svgMaskable = iconSVG(symMain, { size: 512, pad: 0.27 });
+const svgMain = iconSVG({ size: 512, pad: 0.17 });
+const svgSmall = iconSVG({ size: 512, pad: 0.08, boost: 40 }); // тонкі штрихи потовщено для 16–32 px
+const svgMaskable = iconSVG({ size: 512, pad: 0.27 });
 
 write('public/favicon.svg', svgSmall);
 write('brand/bilokha-symbol.svg', svgMain);
